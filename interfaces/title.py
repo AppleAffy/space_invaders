@@ -9,9 +9,15 @@ def output(window:pygame.surface.Surface):
         play_msg = "Click to Play"
     elif manager.initial == False:
         play_msg = "Click to Retry"
-    btn_play = objects.buttons.no_background(450,500,"Arial",30,(235, 64, 52),(98, 52, 235),play_msg)
-    btn_exit = objects.buttons.no_background(500,600,"Arial",30,(235, 64, 52),(98, 52, 235),"Exit")
-    title_screen = image.still(150,50,700,400,"images/space_invaders.png")
+    global title_image
+    title_image = "images/space_invaders.png"
+    if manager.win == 2:
+        title_image = "images/space_invaders_win.png"
+    elif manager.win == 3:
+        title_image = "images/space_invaders_lose.png"
+    btn_play = objects.buttons.no_background(425,500,"Arial",30,(235, 64, 52),(98, 52, 235),play_msg)
+    btn_exit = objects.buttons.no_background(475,600,"Arial",30,(235, 64, 52),(98, 52, 235),"Exit")
+    title_screen = image.still(150,50,700,400,title_image)
     def display():
         window.fill((0,0,0)) #White background
         btn_exit.draw(window)

@@ -71,8 +71,9 @@ def output(window:pygame.surface.Surface):
           if bullet.rect.y > manager.WINDOW_HEIGHT -25:
             enemy_bullets.remove(bullet)
         for bullet in enemy_bullets:
-            if pygame.sprite.collide_mask(bullet,spaceship_player):
+            if pygame.sprite.collide_mask(bullet,spaceship_player): # collision with player and enemy bullets
               print("You Lose")
+              manager.win = 3
               running = False
               manager.screen = 0
         for shield in shields:  
@@ -99,12 +100,14 @@ def output(window:pygame.surface.Surface):
                       shields.remove(shield)
                   break
 
-        if len(enemy_list) == 0:
+        if len(enemy_list) == 0: # all enemies dead?
           running = False
+          manager.win = 2
           manager.screen = 0
         for enemy in enemy_list:
           if pygame.sprite.collide_mask(spaceship_player,enemy):# Game Over if all enemies are dead or if they hit player
             running = False
+            manager.win = 3
             manager.screen = 0
         #Bullet code and movement aswell as reactions to differnet objects and values
         new_bullet = spaceship_player.keys_pressed(True, False)# take scare of movement AND bullets
@@ -120,6 +123,7 @@ def output(window:pygame.surface.Surface):
                 enemy_list.remove(enemy)
               if pygame.sprite.collide_mask(spaceship_player,enemy): # the slowly come down towards the player, so have to take this into consideration
                 running = False
+                manager.win = 3
                 manager.screen = 0
             if bullet.rect.y < 0:
                 bullets.remove(bullet)
