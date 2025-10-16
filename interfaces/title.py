@@ -15,6 +15,7 @@ def output(window:pygame.surface.Surface):
         title_image = "images/space_invaders_win.png"
     elif manager.win == 3:
         title_image = "images/space_invaders_lose.png"
+        manager.score = 0
     btn_play = objects.buttons.no_background(425,500,"Arial",30,(235, 64, 52),(98, 52, 235),play_msg)
     btn_exit = objects.buttons.no_background(475,600,"Arial",30,(235, 64, 52),(98, 52, 235),"Exit")
     title_screen = image.still(150,50,700,400,title_image)

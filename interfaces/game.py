@@ -2,17 +2,18 @@ import interfaces
 import pygame,sys
 from objects import grid,image,interactions
 import manager
-#hello
+import objects.text
+
+
 def output(window:pygame.surface.Surface):
     global shields
     running = True
     manager.initial = False
     #Setup of Starting objects
-
+    font = pygame.font.SysFont("Arial", 30)
     window = pygame.display.set_mode((manager.WINDOW_WIDTH,manager.WINDOW_HEIGHT), pygame.HWSURFACE)
     pygame.display.set_caption("Space Invaders")
-    
-   
+    str_score = f"Score: {manager.score}"
     spaceship_player = interactions.player(450,800,75,75,"images/space_invaders_player.png",7)
     spaceship_enemy1 = interactions.enemy(450,100,75,75,"images/space_invaders_enemy.png") 
     spaceship_enemy2 = interactions.enemy(375,175,75,75,"images/space_invaders_enemy.png")
@@ -36,10 +37,10 @@ def output(window:pygame.surface.Surface):
     max_enemy_len = len(enemy_list)
 
     def display():
-      global shield_list
       global wall_list
       window.fill((0,0,0)) #White background
       #grid.gridHelp(window,manager.WINDOW_WIDTH,manager.WINDOW_HEIGHT)
+      objects.text.blit_text(window,str_score,(100,100),font,pygame.Color("White"))
       spaceship_player.draw(window)
       for bullet in bullets:
         bullet.draw(window)
@@ -47,7 +48,6 @@ def output(window:pygame.surface.Surface):
         bullet.draw(window)
       for enemy in enemy_list:
         enemy.draw(window)
-      
       for shield in shields:
         pygame.draw.rect(window, shield["color"], shield["rect"])
       wall1 = pygame.draw.rect(window,(255,0,0),(25,25,25,950))
@@ -60,7 +60,7 @@ def output(window:pygame.surface.Surface):
     display()
 
     while running:
-        
+        str_score = f"Score: {manager.score}"
         interactions.enemy.move_preplaned(enemy_list,50,875,max_enemy_len)
 
         shots = interactions.enemy.enemy_shoot(enemy_list)
@@ -121,6 +121,7 @@ def output(window:pygame.surface.Surface):
               if pygame.sprite.collide_mask(bullet,enemy): # avoid nasty hitbox, and go for spirtite collsion check instead
                 bullets.remove(bullet)
                 enemy_list.remove(enemy)
+                manager.score += 1
               if pygame.sprite.collide_mask(spaceship_player,enemy): # the slowly come down towards the player, so have to take this into consideration
                 running = False
                 manager.win = 3
