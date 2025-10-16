@@ -4,7 +4,12 @@ import manager
 from objects import image
 
 def output(window:pygame.surface.Surface):
-    btn_play = objects.buttons.no_background(500,500,"Arial",30,(235, 64, 52),(98, 52, 235),"Click to Play")
+    global play_msg
+    if manager.initial:
+        play_msg = "Click to Play"
+    elif manager.initial == False:
+        play_msg = "Click to Retry"
+    btn_play = objects.buttons.no_background(450,500,"Arial",30,(235, 64, 52),(98, 52, 235),play_msg)
     btn_exit = objects.buttons.no_background(500,600,"Arial",30,(235, 64, 52),(98, 52, 235),"Exit")
     title_screen = image.still(150,50,700,400,"images/space_invaders.png")
     def display():

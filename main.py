@@ -7,7 +7,7 @@ import manager
 import pygame,sys
 import interfaces.game
 import interfaces.title
-import interfaces.retry
+
 pygame.init()
 
 
@@ -21,5 +21,4 @@ while True:
         interfaces.title.output(window)
     elif manager.screen == 1:
         interfaces.game.output(window)
-    elif manager.screen == 2:
-        interfaces.retry.output(window)
+

@@ -6,10 +6,11 @@ import manager
 def output(window:pygame.surface.Surface):
     global shields
     running = True
+    manager.initial = False
     #Setup of Starting objects
 
     window = pygame.display.set_mode((manager.WINDOW_WIDTH,manager.WINDOW_HEIGHT), pygame.HWSURFACE)
-    pygame.display.set_caption("Title")
+    pygame.display.set_caption("Space Invaders")
     
    
     spaceship_player = interactions.player(450,800,75,75,"images/space_invaders_player.png",7)
@@ -38,7 +39,7 @@ def output(window:pygame.surface.Surface):
       global shield_list
       global wall_list
       window.fill((0,0,0)) #White background
-      grid.gridHelp(window,manager.WINDOW_WIDTH,manager.WINDOW_HEIGHT)
+      #grid.gridHelp(window,manager.WINDOW_WIDTH,manager.WINDOW_HEIGHT)
       spaceship_player.draw(window)
       for bullet in bullets:
         bullet.draw(window)
@@ -73,7 +74,7 @@ def output(window:pygame.surface.Surface):
             if pygame.sprite.collide_mask(bullet,spaceship_player):
               print("You Lose")
               running = False
-              manager.screen = 2
+              manager.screen = 0
         for shield in shields:  
           for bullet in enemy_bullets:
               if shield["rect"].colliderect(bullet.rect):
@@ -100,11 +101,11 @@ def output(window:pygame.surface.Surface):
 
         if len(enemy_list) == 0:
           running = False
-          manager.screen = 2
+          manager.screen = 0
         for enemy in enemy_list:
           if pygame.sprite.collide_mask(spaceship_player,enemy):# Game Over if all enemies are dead or if they hit player
             running = False
-            manager.screen = 2
+            manager.screen = 0
         #Bullet code and movement aswell as reactions to differnet objects and values
         new_bullet = spaceship_player.keys_pressed(True, False)# take scare of movement AND bullets
         if new_bullet:  # if space was pressed
@@ -119,7 +120,7 @@ def output(window:pygame.surface.Surface):
                 enemy_list.remove(enemy)
               if pygame.sprite.collide_mask(spaceship_player,enemy): # the slowly come down towards the player, so have to take this into consideration
                 running = False
-                manager.screen = 2
+                manager.screen = 0
             if bullet.rect.y < 0:
                 bullets.remove(bullet)
                 print(len(bullets))

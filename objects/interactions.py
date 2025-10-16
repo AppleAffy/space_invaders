@@ -66,9 +66,9 @@ class enemy(image.still):
                 hitwall = True
                 break
         if hitwall:
-            direction *= -1
+            direction *= -1 # multiplyuing by -1 reverses the direction
             for e in obj_list:
-                e.rect.y += 50
+                e.rect.y += 25
                 if e.rect.y >= 875:
                     print("game over")
                     break
