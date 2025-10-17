@@ -6,7 +6,9 @@ from objects import image
 def output(window:pygame.surface.Surface):
     global play_msg
     global button_off
+    global font
     button_off = False
+    font = pygame.font.SysFont("Arial", 30)
     if manager.initial:
         play_msg = "Click to Play"
     elif manager.initial == False:
@@ -23,14 +25,16 @@ def output(window:pygame.surface.Surface):
     btn_exit = objects.buttons.no_background(475,700,"Arial",30,(235, 64, 52),(98, 52, 235),"Exit")
     title_screen = image.still(150,50,700,400,title_image)
     def display():
+        
         window.fill((0,0,0)) #White background
         if button_off == False:
-            btn_exit.draw(window)
+            
             btn_play.draw(window)
             btn_tutorial.draw(window)
             title_screen.draw(window)
-            objects.text.blit_text(window,"Space Invaders: Here's how you play the game ",(100,100),manager.font,pygame.Color("White"))
-
+        elif button_off == True:
+            objects.text.blit_text(window,"Space Invaders: Here's how you play the game\n- Use left and right arrow keys to move\n- Use space bar to shoot\n-Green shields are there to protect you but break by showing they are getting darker\n-enemies damage the shields but so do you\n- Destroy all enemies to win ",(100,100),font,pygame.Color("White"))
+        btn_exit.draw(window)
     
     
     
@@ -43,7 +47,10 @@ def output(window:pygame.surface.Surface):
                 manager.screen = 1
                 run = False
             if btn_exit.update(pygame.mouse.get_pos(),event):
-                sys.exit()
+                if button_off == False:
+                    sys.exit()
+                elif button_off == True:
+                    button_off = False
             if btn_tutorial.update(pygame.mouse.get_pos(),event):
                 button_off = True
             # if user  QUIT then the screen will close
