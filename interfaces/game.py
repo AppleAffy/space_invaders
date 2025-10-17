@@ -10,7 +10,6 @@ def output(window:pygame.surface.Surface):
     running = True
     manager.initial = False
     #Setup of Starting objects
-    font = pygame.font.SysFont("Arial", 30)
     window = pygame.display.set_mode((manager.WINDOW_WIDTH,manager.WINDOW_HEIGHT), pygame.HWSURFACE)
     pygame.display.set_caption("Space Invaders")
     str_score = f"Score: {manager.score}"
@@ -40,7 +39,7 @@ def output(window:pygame.surface.Surface):
       global wall_list
       window.fill((0,0,0)) #White background
       #grid.gridHelp(window,manager.WINDOW_WIDTH,manager.WINDOW_HEIGHT)
-      objects.text.blit_text(window,str_score,(100,100),font,pygame.Color("White"))
+      objects.text.blit_text(window,str_score,(100,100),manager.font,pygame.Color("White"))
       spaceship_player.draw(window)
       for bullet in bullets:
         bullet.draw(window)
